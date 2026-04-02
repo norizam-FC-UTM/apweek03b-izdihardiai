@@ -9,20 +9,37 @@ class BankAccount {
     // Constructor
     public BankAccount(String name, double initialDeposit) {
         this.name = name;
-        this.balance = initialDeposit;
         this.dividendRate = 0.0;
+
+        if (initialDeposit >= 0) {
+            this.balance = initialDeposit;
+        } else {
+            this.balance = 0;
+            System.out.println("Warning, initial depaosit cannot be negative. Setting balance to 0" );
+        }
+
     }
 
     // Deposit money
     public void deposit(double amount) {
-        balance = balance + amount;
-        // too simple - need refinement
+        if (amount>0) {
+            balance = balance + amount;
+            System.out.println("Deposited: $%.2f. New balance: $%.2f%n", amount, balance);
+        } else {
+            System.out.println("Error, desposit amount must be positive.");
+        }
     }
 
     // Withdraw money
     public void withdraw(double amount) {
-        balance = balance - amount;
-        // too simple - need refinement
+          if (amount <= 0) {
+            System.out.println("Error: Withdrawal amount must be positive.");
+        } else if (amount > balance) {
+            System.out.printf("Error: Insufficient funds. Available balance: $%.2f%n", balance);
+        } else {
+            balance = balance - amount;
+            System.out.printf("Withdrew: $%.2f. New balance: $%.2f%n", amount, balance);
+        }
     }
 
     // Calculate dividend
